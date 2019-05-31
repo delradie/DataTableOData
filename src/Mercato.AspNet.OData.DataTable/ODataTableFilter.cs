@@ -49,6 +49,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 }
 
                 OutputTable = OutputRows.CopyToDataTable();
+                OutputTable.TableName = sourceData.TableName;
             }
 
             return OutputTable;
