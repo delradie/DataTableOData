@@ -1,0 +1,119 @@
+﻿using Microsoft.OData.Edm;
+using System;
+using System.Data;
+
+namespace Mercato.AspNet.OData.DataTableExtension
+{
+    /// <summary>
+    /// Extension utility to build an EdmModel for use in validation and parsing from an untyped DataTable
+    /// </summary>
+    public static class EdmBuilder
+    {
+        /// <summary>
+        /// Creates an EdmModel based on the source table
+        /// </summary>
+        /// <param name="sourceTable"></param>
+        /// <returns></returns>
+        public static Tuple<IEdmModel, IEdmType> BuildEdmModel(this DataTable sourceTable)
+        {
+            String Namespace = "Dynamic";
+            String TypeName = sourceTable.TableName;
+
+            EdmModel Output = new EdmModel();
+
+            EdmComplexType DataSourceModel = new EdmComplexType(Namespace, TypeName);
+
+            foreach (DataColumn SourceColumn in sourceTable.Columns)
+            {
+                String ColumnName = SourceColumn.ColumnName;
+                Type ColumnType = SourceColumn.DataType;
+                EdmPrimitiveTypeKind? MappedType = ConvertType(ColumnType);
+
+                if (!MappedType.HasValue)
+                {
+                    continue;
+                }
+
+                DataSourceModel.AddStructuralProperty(ColumnName, MappedType.Value);
+
+            }
+
+            Output.AddComplexType(Namespace, "DataSource", DataSourceModel);
+
+            return new Tuple<IEdmModel, IEdmType>(Output, DataSourceModel);
+        }
+
+        /// <summary>
+        /// Maps source types to the Edm types to be used in the output model
+        /// </summary>
+        /// <param name="sourceType"></param>
+        /// <returns></returns>
+        private static EdmPrimitiveTypeKind? ConvertType(Type sourceType)
+        {
+            EdmPrimitiveTypeKind? Output = null;
+
+            if (sourceType == typeof(Byte[]))
+            {
+                Output = EdmPrimitiveTypeKind.Binary;
+            }
+            else if (sourceType == typeof(Boolean))
+            {
+                Output = EdmPrimitiveTypeKind.Boolean;
+            }
+            else if (sourceType == typeof(Byte))
+            {
+                Output = EdmPrimitiveTypeKind.Byte;
+            }
+            else if (sourceType == typeof(DateTime))
+            {
+                Output = EdmPrimitiveTypeKind.Date;
+            }
+            else if (sourceType == typeof(Decimal))
+            {
+                Output = EdmPrimitiveTypeKind.Decimal;
+            }
+            else if (sourceType == typeof(Double))
+            {
+                Output = EdmPrimitiveTypeKind.Double;
+            }
+            else if (sourceType == typeof(Guid))
+            {
+                Output = EdmPrimitiveTypeKind.Guid;
+            }
+            else if (sourceType == typeof(Single))
+            {
+                Output = EdmPrimitiveTypeKind.Single;
+            }
+            else if (sourceType == typeof(SByte))
+            {
+                Output = EdmPrimitiveTypeKind.SByte;
+            }
+            else if (sourceType == typeof(Int16))
+            {
+                Output = EdmPrimitiveTypeKind.Int16;
+            }
+            else if (sourceType == typeof(Int32))
+            {
+                Output = EdmPrimitiveTypeKind.Int32;
+            }
+            else if (sourceType == typeof(Int64))
+            {
+                Output = EdmPrimitiveTypeKind.Int64;
+            }
+            else if (sourceType == typeof(String))
+            {
+                Output = EdmPrimitiveTypeKind.String;
+            }
+            else if (sourceType == typeof(TimeSpan))
+            {
+                Output = EdmPrimitiveTypeKind.TimeOfDay;
+            }
+            else if (sourceType == typeof(DateTimeOffset))
+            {
+                Output = EdmPrimitiveTypeKind.DateTimeOffset;
+            }
+
+            return Output;
+        }
+    }
+}
