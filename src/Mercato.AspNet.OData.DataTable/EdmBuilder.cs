@@ -21,8 +21,8 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
             EdmModel Output = new EdmModel();
 
-            EdmComplexType DataSourceModel = new EdmComplexType(Namespace, TypeName);
-
+            EdmEntityType DataSourceModel = new EdmEntityType(Namespace, TypeName);
+            
             foreach (DataColumn SourceColumn in sourceTable.Columns)
             {
                 String ColumnName = SourceColumn.ColumnName;
@@ -38,7 +38,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
             }
 
-            Output.AddComplexType(Namespace, "DataSource", DataSourceModel);
+            Output.AddEntityType(Namespace, "DataSource", DataSourceModel);
 
             return new Tuple<IEdmModel, IEdmType>(Output, DataSourceModel);
         }

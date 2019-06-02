@@ -52,6 +52,11 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 OutputTable.TableName = sourceData.TableName;
             }
 
+            if(criteria.SelectExpand?.SelectExpandClause?.SelectedItems != null)
+            {
+                OutputTable = ApplySelect(OutputTable, criteria.SelectExpand.SelectExpandClause);
+            }
+
             return OutputTable;
         }
 
@@ -227,5 +232,25 @@ namespace Mercato.AspNet.OData.DataTableExtension
             return Output;
         }
 
+        private static DataTable ApplySelect(DataTable source, SelectExpandClause selectCriteria)
+        {
+            if (selectCriteria.AllSelected)
+            {
+                return source;
+            }
+
+            List<DataColumn> DeleteColumns = new List<DataColumn>();
+
+            foreach (DataColumn sourceColumn in source.Columns)
+            {
+
+                //if(!selectCriteria.SelectedItems.Any(x=>String.Equals(x)))
+                //{
+
+                //}
+            }
+
+            return source;
+        }
     }
 }
