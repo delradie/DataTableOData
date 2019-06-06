@@ -232,6 +232,12 @@ namespace Mercato.AspNet.OData.DataTableExtension
             return Output;
         }
 
+        /// <summary>
+        /// Restricts the output table to only the columns specified in the OData $select parameter
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="selectCriteria"></param>
+        /// <returns></returns>
         private static DataTable ApplySelect(DataTable source, SelectExpandClause selectCriteria)
         {
             if (selectCriteria.AllSelected)
