@@ -43,13 +43,18 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     OutputRows = OutputRows.Skip(criteria.Skip.Value);
                 }
 
-                if(criteria.Top != null)
+                if (criteria.Top != null)
                 {
                     OutputRows = OutputRows.Take(criteria.Top.Value);
                 }
 
                 OutputTable = OutputRows.CopyToDataTable();
                 OutputTable.TableName = sourceData.TableName;
+            }
+
+            if (criteria.SelectExpand?.SelectExpandClause?.SelectedItems != null)
+            {
+                OutputTable = ApplySelect(OutputTable, criteria.SelectExpand.SelectExpandClause);
             }
 
             return OutputTable;
@@ -105,17 +110,17 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     SingleValueNode Node = (node as ConvertNode)?.Source;
 
                     return ParseNode(Node);
-                //case QueryNodeKind.SingleValueFunctionCall:
-                //    SingleValueFunctionCallNode FuncNode = node as SingleValueFunctionCallNode;
+                    //case QueryNodeKind.SingleValueFunctionCall:
+                    //    SingleValueFunctionCallNode FuncNode = node as SingleValueFunctionCallNode;
 
-                //    FuncNode.p
+                    //    FuncNode.p
 
-                //    String OperatorFormat = TranslateOperator(BONode.OperatorKind);
+                    //    String OperatorFormat = TranslateOperator(BONode.OperatorKind);
 
 
-                //    return String.Empty;
+                    //    return String.Empty;
 
-                //    break;
+                    //    break;
             }
 
             return String.Empty;
@@ -171,8 +176,8 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 case BinaryOperatorKind.Modulo:
                     Output = "{0} % {1}";
                     break;
-                //case BinaryOperatorKind.Has:
-                //TODO: Implement has operator
+                    //case BinaryOperatorKind.Has:
+                    //TODO: Implement has operator
                     //break;
             }
 
@@ -227,5 +232,58 @@ namespace Mercato.AspNet.OData.DataTableExtension
             return Output;
         }
 
+        /// <summary>
+        /// Restricts the output table to only the columns specified in the OData $select parameter
+        /// </summary>
+        /// <param name="source"></param>
+        /// <param name="selectCriteria"></param>
+        /// <returns></returns>
+        private static DataTable ApplySelect(DataTable source, SelectExpandClause selectCriteria)
+        {
+            if (selectCriteria.AllSelected)
+            {
+                return source;
+            }
+
+            List<String> ColumnNames = new List<String>();
+
+            foreach (SelectItem item in selectCriteria.SelectedItems)
+            {
+                if (item is PathSelectItem)
+                {
+                    PathSelectItem PathItem = (PathSelectItem)item;
+
+                    IEnumerable<String> Path = PathItem.SelectedPath.Select(x => x.Identifier.ToUpperInvariant());
+
+                    foreach (String PathIdent in Path)
+                    {
+                        if (!ColumnNames.Contains(PathIdent))
+                        {
+                            ColumnNames.Add(PathIdent);
+                        }
+                    }
+                }
+            }
+
+            List<DataColumn> DeleteColumns = new List<DataColumn>();
+
+            foreach (DataColumn sourceColumn in source.Columns)
+            {
+                if (!ColumnNames.Any(x => String.Equals(x, sourceColumn.ColumnName, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    DeleteColumns.Add(sourceColumn);
+                }
+            }
+
+            if(DeleteColumns.Count > 0)
+            {
+                foreach (DataColumn Target in DeleteColumns)
+                {
+                    source.Columns.Remove(Target.ColumnName);
+                }
+            }
+
+            return source;
+        }
     }
 }
