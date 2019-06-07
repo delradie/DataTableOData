@@ -5,15 +5,16 @@
     <RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
     <AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.1-alpha</Version>
+    <Version>1.0.2-alpha</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Company>Mercato Solutions Ltd</Company>
     <Authors>Mercato Solutions Ltd</Authors>
     <Copyright>c 2019 Mercato Solutions Ltd</Copyright>
     <RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
     <PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
-    <AssemblyVersion>1.0.1.1</AssemblyVersion>
+    <AssemblyVersion>1.1.0.2</AssemblyVersion>
     <PackageReleaseNotes>v1.0.1 - Simplified extension method added for DataTable</PackageReleaseNotes>
+    <FileVersion>1.1.0.2</FileVersion>
   </PropertyGroup>
 
   <ItemGroup>
