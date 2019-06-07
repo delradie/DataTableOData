@@ -12,6 +12,8 @@
     <Copyright>c 2019 Mercato Solutions Ltd</Copyright>
     <RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
     <PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
+    <AssemblyVersion>1.0.1.1</AssemblyVersion>
+    <PackageReleaseNotes>v1.0.1 - Simplified extension method added for DataTable</PackageReleaseNotes>
   </PropertyGroup>
 
   <ItemGroup>
