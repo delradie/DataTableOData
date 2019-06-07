@@ -19,15 +19,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
         {
             DataTable Source = TestData.GetData();
 
-            Tuple<IEdmModel, IEdmType> SourceModel = Source.BuildEdmModel();
-
-            ODataPath Path = Request.ODataProperties().Path;
-
-            ODataQueryContext SourceContext = new ODataQueryContext(SourceModel.Item1, SourceModel.Item2, Path);
-
-            ODataQueryOptions Query = new ODataQueryOptions(SourceContext, Request);
-
-            DataTable Output = Source.Apply(Query);
+            DataTable Output = Source.ApplyODataQuery(Request);
 
             return Ok<DataTable>(Output);
         }      

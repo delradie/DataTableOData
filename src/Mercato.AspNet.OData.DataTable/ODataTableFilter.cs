@@ -1,9 +1,14 @@
-﻿using Microsoft.AspNet.OData.Query;
+﻿using Microsoft.AspNet.OData;
+using Microsoft.AspNet.OData.Extensions;
+using Microsoft.AspNet.OData.Query;
+using Microsoft.OData.Edm;
 using Microsoft.OData.UriParser;
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
+using System.Net.Http;
+using Routing = Microsoft.AspNet.OData.Routing;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
@@ -12,6 +17,19 @@ namespace Mercato.AspNet.OData.DataTableExtension
     /// </summary>
     public static class ODataTableFilter
     {
+        public static DataTable ApplyODataQuery(this DataTable sourceData, HttpRequestMessage request)
+        {
+            Tuple<IEdmModel, IEdmType> SourceModel = sourceData.BuildEdmModel();
+
+            Routing.ODataPath Path = request.ODataProperties().Path;
+
+            ODataQueryContext SourceContext = new ODataQueryContext(SourceModel.Item1, SourceModel.Item2, Path);
+
+            ODataQueryOptions Query = new ODataQueryOptions(SourceContext, request);
+
+            return sourceData.Apply(Query);
+        }
+
         /// <summary>
         /// Extension method on DataTable to apply the input query
         /// </summary>
@@ -275,7 +293,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 }
             }
 
-            if(DeleteColumns.Count > 0)
+            if (DeleteColumns.Count > 0)
             {
                 foreach (DataColumn Target in DeleteColumns)
                 {
