@@ -5,7 +5,7 @@
     <RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
     <AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.0.0-alpha</Version>
+    <Version>1.0.1-alpha</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Company>Mercato Solutions Ltd</Company>
     <Authors>Mercato Solutions Ltd</Authors>
