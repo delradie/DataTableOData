@@ -20,6 +20,7 @@
     <PackageReference Include="Microsoft.AspNet.OData" Version="7.1.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.2" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.5.0" />
+    <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
 
