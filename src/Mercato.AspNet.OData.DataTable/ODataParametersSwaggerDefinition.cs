@@ -26,58 +26,63 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
             if (responseType.GetInterfaces().Any(i => i == QueryableType))
             {
-                if (operation.parameters == null)
-                {
-                    operation.parameters = new List<Parameter>();
-
-                    operation.parameters.Add(new Parameter
-                    {
-                        name = "$filter",
-                        description = "Filter the results using OData syntax.",
-                        required = false,
-                        type = "string",
-                        @in = "query"
-                    });
-
-                    operation.parameters.Add(new Parameter
-                    {
-                        name = "$orderby",
-                        description = "Order the results using OData syntax.",
-                        required = false,
-                        type = "string",
-                        @in = "query"
-                    });
-
-                    operation.parameters.Add(new Parameter
-                    {
-                        name = "$skip",
-                        description = "The number of results to skip.",
-                        required = false,
-                        type = "integer",
-                        @in = "query"
-                    });
-
-                    operation.parameters.Add(new Parameter
-                    {
-                        name = "$top",
-                        description = "The number of results to return.",
-                        required = false,
-                        type = "integer",
-                        @in = "query"
-                    });
-
-                    //Hidden as this is not currently implemented
-                    //operation.parameters.Add(new Parameter
-                    //{
-                    //    name = "$count",
-                    //    description = "Return the total count.",
-                    //    required = false,
-                    //    type = "boolean",
-                    //    @in = "query"
-                    //});
-                }
-
+                AppendOdataParametersToOperation(operation);
             }
+        }
+
+        public static void AppendOdataParametersToOperation(Operation operation)
+        {
+            if (operation.parameters == null)
+            {
+                operation.parameters = new List<Parameter>();
+            }
+
+            operation.parameters.Add(new Parameter
+            {
+                name = "$filter",
+                description = "Filter the results using OData syntax.",
+                required = false,
+                type = "string",
+                @in = "query"
+            });
+
+            operation.parameters.Add(new Parameter
+            {
+                name = "$orderby",
+                description = "Order the results using OData syntax.",
+                required = false,
+                type = "string",
+                @in = "query"
+            });
+
+            operation.parameters.Add(new Parameter
+            {
+                name = "$skip",
+                description = "The number of results to skip.",
+                required = false,
+                type = "integer",
+                @in = "query"
+            });
+
+            operation.parameters.Add(new Parameter
+            {
+                name = "$top",
+                description = "The number of results to return.",
+                required = false,
+                type = "integer",
+                @in = "query"
+            });
+
+            //Hidden as this is not currently implemented
+            //operation.parameters.Add(new Parameter
+            //{
+            //    name = "$count",
+            //    description = "Return the total count.",
+            //    required = false,
+            //    type = "boolean",
+            //    @in = "query"
+            //});
+
         }
     }
 }
