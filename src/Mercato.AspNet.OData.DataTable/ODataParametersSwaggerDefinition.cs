@@ -30,6 +30,10 @@ namespace Mercato.AspNet.OData.DataTableExtension
             }
         }
 
+        /// <summary>
+        /// Simple method to append OData parameters to the target operation
+        /// </summary>
+        /// <param name="operation">Operation object to add parameter information to</param>
         public static void AppendOdataParametersToOperation(Operation operation)
         {
             if (operation.parameters == null)
