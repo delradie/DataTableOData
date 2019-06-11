@@ -94,7 +94,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 operation.parameters.Add(new Parameter
                 {
                     name = "$select",
-                    description = "Specify the subset of proiperties to be included in the response.",
+                    description = "Specify the subset of properties to be included in the response.",
                     required = false,
                     type = "integer",
                     @in = "query"
