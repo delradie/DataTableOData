@@ -96,7 +96,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     name = "$select",
                     description = "Specify the subset of properties to be included in the response.",
                     required = false,
-                    type = "integer",
+                    type = "string",
                     @in = "query"
                 });
             }
