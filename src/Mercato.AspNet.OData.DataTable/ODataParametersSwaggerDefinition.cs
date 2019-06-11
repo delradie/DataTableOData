@@ -41,41 +41,65 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 operation.parameters = new List<Parameter>();
             }
 
-            operation.parameters.Add(new Parameter
+            if (!operation.parameters.Any(x=>String.Equals(x.name, "$filter", StringComparison.InvariantCultureIgnoreCase)))
             {
-                name = "$filter",
-                description = "Filter the results using OData syntax.",
-                required = false,
-                type = "string",
-                @in = "query"
-            });
+                operation.parameters.Add(new Parameter
+                {
+                    name = "$filter",
+                    description = "Filter the results using OData syntax.",
+                    required = false,
+                    type = "string",
+                    @in = "query"
+                });
+            }
 
-            operation.parameters.Add(new Parameter
+            if (!operation.parameters.Any(x => String.Equals(x.name, "$orderby", StringComparison.InvariantCultureIgnoreCase)))
             {
-                name = "$orderby",
-                description = "Order the results using OData syntax.",
-                required = false,
-                type = "string",
-                @in = "query"
-            });
+                operation.parameters.Add(new Parameter
+                {
+                    name = "$orderby",
+                    description = "Order the results using OData syntax.",
+                    required = false,
+                    type = "string",
+                    @in = "query"
+                });
+            }
 
-            operation.parameters.Add(new Parameter
+            if (!operation.parameters.Any(x => String.Equals(x.name, "$skip", StringComparison.InvariantCultureIgnoreCase)))
             {
-                name = "$skip",
-                description = "The number of results to skip.",
-                required = false,
-                type = "integer",
-                @in = "query"
-            });
+                operation.parameters.Add(new Parameter
+                {
+                    name = "$skip",
+                    description = "The number of results to skip.",
+                    required = false,
+                    type = "integer",
+                    @in = "query"
+                });
+            }
 
-            operation.parameters.Add(new Parameter
+            if (!operation.parameters.Any(x => String.Equals(x.name, "$top", StringComparison.InvariantCultureIgnoreCase)))
             {
-                name = "$top",
-                description = "The number of results to return.",
-                required = false,
-                type = "integer",
-                @in = "query"
-            });
+                operation.parameters.Add(new Parameter
+                {
+                    name = "$top",
+                    description = "The number of results to return.",
+                    required = false,
+                    type = "integer",
+                    @in = "query"
+                });
+            }
+
+            if (!operation.parameters.Any(x => String.Equals(x.name, "$select", StringComparison.InvariantCultureIgnoreCase)))
+            {
+                operation.parameters.Add(new Parameter
+                {
+                    name = "$select",
+                    description = "Specify the subset of properties to be included in the response.",
+                    required = false,
+                    type = "integer",
+                    @in = "query"
+                });
+            }
 
             //Hidden as this is not currently implemented
             //operation.parameters.Add(new Parameter
