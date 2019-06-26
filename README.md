@@ -1,4 +1,4 @@
-﻿﻿﻿﻿﻿﻿Mercato.AspNet.OData.DataTable
+﻿﻿﻿﻿Mercato.AspNet.OData.DataTable
 =========
 
 Adds support for [OData](https://odata.github.io/) query syntax over ADO.Net [DataTables](https://docs.microsoft.com/en-us/dotnet/api/system.data.datatable) in WebApi projects.
@@ -53,7 +53,7 @@ using Mercato.AspNet.OData.DataTableExtension;
             DataTable Output = BaseData.ApplyODataQuery(Request);
 ```
 
-##Swagger Support##
+## Swagger Support ##
 
 
 The class ODataParametersSwaggerDefinition adds support for indicating the supported OData parameters in OpenApi (Swagger) documentation using [Swashbuckle](https://github.com/domaindrivendev/Swashbuckle).
