@@ -49,6 +49,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     description = "Filter the results using OData syntax.",
                     required = false,
                     type = "string",
+                    vendorExtensions = null,
                     @in = "query"
                 });
             }
@@ -61,6 +62,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     description = "Order the results using OData syntax.",
                     required = false,
                     type = "string",
+                    vendorExtensions = null,
                     @in = "query"
                 });
             }
@@ -73,6 +75,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     description = "The number of results to skip.",
                     required = false,
                     type = "integer",
+                    vendorExtensions = null,
                     @in = "query"
                 });
             }
@@ -85,6 +88,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     description = "The number of results to return.",
                     required = false,
                     type = "integer",
+                    vendorExtensions = null,
                     @in = "query"
                 });
             }
@@ -97,6 +101,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     description = "Specify the subset of properties to be included in the response.",
                     required = false,
                     type = "string",
+                    vendorExtensions = null,
                     @in = "query"
                 });
             }
