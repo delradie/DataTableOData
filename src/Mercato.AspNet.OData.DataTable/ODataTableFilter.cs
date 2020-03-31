@@ -119,7 +119,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 case QueryNodeKind.Constant:
                     ConstantNode ConstNode = node as ConstantNode;
 
-                    return ConstNode.LiteralText;
+                    return ConvertLiteralText(ConstNode);
                 case QueryNodeKind.SingleValuePropertyAccess:
                     SingleValuePropertyAccessNode SinglePropertyNode = node as SingleValuePropertyAccessNode;
 
@@ -142,6 +142,20 @@ namespace Mercato.AspNet.OData.DataTableExtension
             }
 
             return String.Empty;
+        }
+
+        private static String ConvertLiteralText(ConstantNode node)
+        {
+            String Output = node?.LiteralText;
+
+            switch (node.TypeReference.PrimitiveKind())
+            {
+                case EdmPrimitiveTypeKind.Guid:
+                    Output = $"'{Output}'";
+                    break;
+            }
+
+            return Output;
         }
 
         /// <summary>
