@@ -8,6 +8,7 @@ using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Http;
+using System.Security.Cryptography;
 using Routing = Microsoft.AspNet.OData.Routing;
 
 namespace Mercato.AspNet.OData.DataTableExtension
@@ -17,7 +18,22 @@ namespace Mercato.AspNet.OData.DataTableExtension
     /// </summary>
     public static class ODataTableFilter
     {
-        public static DataTable ApplyODataQuery(this DataTable sourceData, HttpRequestMessage request)
+        public enum OutputFormat
+        {
+            RawNoMetaData,            
+            DataWithMetaData,
+            DataWithMetaDataAndCount
+        }
+
+        public class Result
+        {
+            public DataTable Values { get; set; }
+            public Int32 ValueCount { get; set; }
+            public String NextPageQueryString { get; set; }
+            public OutputFormat RequestedOutputFormat { get; set; }
+        }
+
+        public static Result ApplyODataQuery(this DataTable sourceData, HttpRequestMessage request)
         {
             Tuple<IEdmModel, IEdmType> SourceModel = sourceData.BuildEdmModel();
 
@@ -36,13 +52,24 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// <param name="sourceData">Source data</param>
         /// <param name="criteria">OData options</param>
         /// <returns>A DataTable containing the output from applying the OData options to the input data</returns>
-        public static DataTable Apply(this DataTable sourceData, ODataQueryOptions criteria)
+        public static Result Apply(this DataTable sourceData, ODataQueryOptions criteria)
         {
+            OutputFormat RequestedFormat = OutputFormat.DataWithMetaData;
+            Int32 OutputCount = 0;
+            String NextPageQuery = null;
+
             DataView Output = new DataView(sourceData);
 
             if (criteria.Filter != null)
             {
                 Output.RowFilter = TranslateFilter(criteria.Filter);
+            }
+
+            OutputCount = Output.Count;
+
+            if (criteria.Count?.Value ?? false)
+            {
+                RequestedFormat = OutputFormat.DataWithMetaDataAndCount;
             }
 
             if (criteria.OrderBy?.OrderByClause != null)
@@ -64,6 +91,8 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 if (criteria.Top != null)
                 {
                     OutputRows = OutputRows.Take(criteria.Top.Value);
+
+                    NextPageQuery = "";
                 }
 
                 OutputTable = OutputRows.CopyToDataTable();
@@ -75,7 +104,13 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 OutputTable = ApplySelect(OutputTable, criteria.SelectExpand.SelectExpandClause);
             }
 
-            return OutputTable;
+            return new Result()
+            {
+                Values = OutputTable,
+                ValueCount = OutputCount,
+                RequestedOutputFormat = RequestedFormat,
+                NextPageQueryString = NextPageQuery
+            };                
         }
 
         /// <summary>
