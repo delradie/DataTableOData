@@ -9,13 +9,13 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
     {
         public class OdataReturn
         {
-            [JsonProperty("@odata.context")]
+            [JsonProperty("@odata.context, NullValueHandling = NullValueHandling.Ignore")]
             public String Context { get; set; }
-            [JsonProperty("@odata.count")]
+            [JsonProperty("@odata.count", NullValueHandling = NullValueHandling.Ignore)]
             public Int32? Count { get; set; }
-            [JsonProperty("@odata.nextLink")]
+            [JsonProperty("@odata.nextLink, NullValueHandling = NullValueHandling.Ignore")]
             public String NextPageLink { get; set; }
-            [JsonProperty("value")]
+            [JsonProperty("value, NullValueHandling = NullValueHandling.Ignore")]
             public DataTable Values { get; set; }
         }
 
