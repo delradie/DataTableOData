@@ -12,8 +12,8 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
             [JsonProperty("@odata.context")]
             public String Context { get; set; }
             [JsonProperty("@odata.count")]
-            public Int32 Count { get; set; }
-            [JsonProperty("@odata.count")]
+            public Int32? Count { get; set; }
+            [JsonProperty("@odata.nextLink")]
             public String NextPageLink { get; set; }
             [JsonProperty("value")]
             public DataTable Values { get; set; }
@@ -26,34 +26,26 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 
             ODataTableFilter.Result Output = Source.ApplyODataQuery(this.Request);
 
-            switch(Output.RequestedOutputFormat)
+            OdataReturn ReturnData = new OdataReturn()
             {
-                case ODataTableFilter.OutputFormat.Count:
-                    return Ok<Int32>(Output.ValueCount);
-                case ODataTableFilter.OutputFormat.RawNoMetaData:
-                    return Ok<DataTable>(Output.Values);
-                default:
-                    OdataReturn ReturnData = new OdataReturn()
-                    {
-                        Values = Output.Values
-                    };
+                Values = Output.Values
+            };
 
-                    if(Output.RequestedOutputFormat == ODataTableFilter.OutputFormat.DataWithMetaDataAndCount)
-                    {
-                        ReturnData.Count = Output.ValueCount;
-                    }
-                    else if(Output.RequestedOutputFormat == ODataTableFilter.OutputFormat.DataWithMetaData)
-                    {
-                        ReturnData.Context = $"http://localhost:50293/api/Test/$metadata";
-                    }
-
-                    if(!String.IsNullOrWhiteSpace(Output.NextPageQueryString))
-                    {
-                        ReturnData.NextPageLink = $"http://localhost:50293/api/Test?{Output.NextPageQueryString}";
-                    }
-
-                    return Ok<OdataReturn>(ReturnData);
+            if (Output.RequestedOutputFormat == ODataTableFilter.OutputFormat.DataWithMetaDataAndCount)
+            {
+                ReturnData.Count = Output.ValueCount;
             }
+            else if (Output.RequestedOutputFormat == ODataTableFilter.OutputFormat.DataWithMetaData)
+            {
+                ReturnData.Context = $"http://localhost:50293/api/Test/$metadata";
+            }
+
+            if (!String.IsNullOrWhiteSpace(Output.NextPageQueryString))
+            {
+                ReturnData.NextPageLink = $"http://localhost:50293/api/Test?{Output.NextPageQueryString}";
+            }
+
+            return Ok<OdataReturn>(ReturnData);
         }
     }
 }
