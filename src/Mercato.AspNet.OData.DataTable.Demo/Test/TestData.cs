@@ -9,12 +9,14 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
         {
             DataTable Output = new DataTable("DataSource");
 
-            Output.Columns.Add("ID", typeof(Int32));
+            DataColumn IDColumn = Output.Columns.Add("ID", typeof(Int32));
             Output.Columns.Add("Description", typeof(String));
             Output.Columns.Add("Value", typeof(Decimal));
             Output.Columns.Add("LastUpdated", typeof(DateTime));
             Output.Columns.Add("LastUpdatedBy", typeof(Int32));
             Output.Columns.Add("ExternalId", typeof(Guid));
+
+            Output.PrimaryKey = new DataColumn[] { IDColumn };
 
             DataRow NewRow = Output.NewRow();
 

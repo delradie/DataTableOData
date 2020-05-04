@@ -1,6 +1,8 @@
 ﻿using Microsoft.OData.Edm;
 using System;
+using System.Collections.Generic;
 using System.Data;
+using System.Linq;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
@@ -14,15 +16,21 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// </summary>
         /// <param name="sourceTable"></param>
         /// <returns></returns>
-        public static Tuple<IEdmModel, IEdmType> BuildEdmModel(this DataTable sourceTable)
+        public static Tuple<IEdmModel, IEdmType> BuildEdmModel(this DataTable sourceTable, String entityName = null)
         {
             String Namespace = "Dynamic";
             String TypeName = sourceTable.TableName;
 
+            if(!String.IsNullOrWhiteSpace(entityName))
+            {
+                TypeName = entityName;
+            }
+
             EdmModel Output = new EdmModel();
 
             EdmEntityType DataSourceModel = new EdmEntityType(Namespace, TypeName);
-            
+            List<IEdmStructuralProperty> KeyProperties = new List<IEdmStructuralProperty>();
+
             foreach (DataColumn SourceColumn in sourceTable.Columns)
             {
                 String ColumnName = SourceColumn.ColumnName;
@@ -34,8 +42,17 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     continue;
                 }
 
-                DataSourceModel.AddStructuralProperty(ColumnName, MappedType.Value);
+                IEdmStructuralProperty NewColumn = DataSourceModel.AddStructuralProperty(ColumnName, MappedType.Value);
 
+                if(sourceTable.PrimaryKey != null && sourceTable.PrimaryKey.Any(x=>String.Equals(x.ColumnName, ColumnName, StringComparison.InvariantCultureIgnoreCase)))
+                {
+                    KeyProperties.Add(NewColumn);
+                }
+            }
+
+            if (KeyProperties.Count > 0)
+            {
+                DataSourceModel.AddKeys(KeyProperties);
             }
 
             Output.AddElement(DataSourceModel);
