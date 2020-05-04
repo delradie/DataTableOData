@@ -38,7 +38,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
             }
 
-            Output.AddEntityType(Namespace, "DataSource", DataSourceModel);
+            Output.AddElement(DataSourceModel);
 
             return new Tuple<IEdmModel, IEdmType>(Output, DataSourceModel);
         }
