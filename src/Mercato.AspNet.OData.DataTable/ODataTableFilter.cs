@@ -3,11 +3,13 @@ using Microsoft.AspNet.OData.Extensions;
 using Microsoft.AspNet.OData.Query;
 using Microsoft.OData.Edm;
 using Microsoft.OData.UriParser;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
 using System.Net.Http;
+using System.Text;
 using Routing = Microsoft.AspNet.OData.Routing;
 
 namespace Mercato.AspNet.OData.DataTableExtension
@@ -17,9 +19,23 @@ namespace Mercato.AspNet.OData.DataTableExtension
     /// </summary>
     public static class ODataTableFilter
     {
-        public static DataTable ApplyODataQuery(this DataTable sourceData, HttpRequestMessage request)
+        public enum OutputFormat
         {
-            Tuple<IEdmModel, IEdmType> SourceModel = sourceData.BuildEdmModel();
+            DataWithMetaData,
+            DataWithMetaDataAndCount
+        }
+
+        public class Result
+        {
+            public DataTable Values { get; set; }
+            public Int32 ValueCount { get; set; }
+            public String NextPageQueryString { get; set; }
+            public OutputFormat RequestedOutputFormat { get; set; }
+        }
+
+        public static Result ApplyODataQuery(this DataTable sourceData, HttpRequestMessage request, Tuple<IEdmModel, IEdmType> datasourceEdmProperties = null)
+        {
+            Tuple<IEdmModel, IEdmType> SourceModel = datasourceEdmProperties ?? sourceData.BuildEdmModel();
 
             Routing.ODataPath Path = request.ODataProperties().Path;
 
@@ -36,13 +52,24 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// <param name="sourceData">Source data</param>
         /// <param name="criteria">OData options</param>
         /// <returns>A DataTable containing the output from applying the OData options to the input data</returns>
-        public static DataTable Apply(this DataTable sourceData, ODataQueryOptions criteria)
+        public static Result Apply(this DataTable sourceData, ODataQueryOptions criteria)
         {
+            OutputFormat RequestedFormat = OutputFormat.DataWithMetaData;
+            Int32 OutputCount = 0;
+            String NextPageQuery = null;
+
             DataView Output = new DataView(sourceData);
 
             if (criteria.Filter != null)
             {
                 Output.RowFilter = TranslateFilter(criteria.Filter);
+            }
+
+            OutputCount = Output.Count;
+
+            if (criteria.Count?.Value ?? false)
+            {
+                RequestedFormat = OutputFormat.DataWithMetaDataAndCount;
             }
 
             if (criteria.OrderBy?.OrderByClause != null)
@@ -64,6 +91,8 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 if (criteria.Top != null)
                 {
                     OutputRows = OutputRows.Take(criteria.Top.Value);
+
+                    NextPageQuery = GenerateNextPageQueryString(criteria, OutputCount);
                 }
 
                 OutputTable = OutputRows.CopyToDataTable();
@@ -75,7 +104,66 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 OutputTable = ApplySelect(OutputTable, criteria.SelectExpand.SelectExpandClause);
             }
 
-            return OutputTable;
+            return new Result()
+            {
+                Values = OutputTable,
+                ValueCount = OutputCount,
+                RequestedOutputFormat = RequestedFormat,
+                NextPageQueryString = NextPageQuery
+            };
+        }
+
+        private static String GenerateNextPageQueryString(ODataQueryOptions criteria, Int32 rowCount)
+        {
+            if (rowCount == 0)
+            {
+                return String.Empty;
+            }
+
+            if(criteria.Top == null || criteria.Top.Value <= 0)
+            {
+                return String.Empty;
+            }
+
+            Int32 Skip = criteria.Top.Value;
+
+            if(criteria.Skip != null && criteria.Skip.Value > 0)
+            {
+                Skip += criteria.Skip.Value;
+            }
+
+            if(Skip >= rowCount)
+            {
+                return String.Empty;
+            }
+
+            StringBuilder QueryStringBuilder = new StringBuilder(512);
+
+            if(criteria.Filter != null && !String.IsNullOrWhiteSpace(criteria.Filter.RawValue))
+            {
+                QueryStringBuilder.Append($"&$filter={criteria.Filter.RawValue}");
+            }
+
+            if (criteria.Count != null && !String.IsNullOrWhiteSpace(criteria.Count.RawValue))
+            {
+                QueryStringBuilder.Append($"&$count={criteria.Count.RawValue}");
+            }
+
+            if (criteria.SelectExpand != null && !String.IsNullOrWhiteSpace(criteria.SelectExpand.RawSelect))
+            {
+                QueryStringBuilder.Append($"&$select={criteria.SelectExpand.RawSelect}");
+            }
+
+            if (criteria.SelectExpand != null && !String.IsNullOrWhiteSpace(criteria.SelectExpand.RawExpand))
+            {
+                QueryStringBuilder.Append($"&$expand={criteria.SelectExpand.RawExpand}");
+            }
+
+            QueryStringBuilder.Append($"&$top={criteria.Top.RawValue}&$skip={Skip}");
+
+            String Output = QueryStringBuilder.ToString(1, QueryStringBuilder.Length - 1);
+
+            return Output;
         }
 
         /// <summary>
