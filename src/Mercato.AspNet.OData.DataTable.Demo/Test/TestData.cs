@@ -7,7 +7,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
     {
         public static DataTable GetData()
         {
-            DataTable Output = new DataTable("DataSource");
+            DataTable Output = new DataTable("Test");
 
             DataColumn IDColumn = Output.Columns.Add("ID", typeof(Int32));
             Output.Columns.Add("Description", typeof(String));

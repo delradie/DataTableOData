@@ -14,22 +14,10 @@ using System.Xml;
 
 namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 {
-    [RoutePrefix("api/Test")]
+    [RoutePrefix("api")]
     public class TestController : ApiController
     {
-        public class OdataReturn
-        {
-            [JsonProperty("@odata.context, NullValueHandling = NullValueHandling.Ignore")]
-            public String Context { get; set; }
-            [JsonProperty("@odata.count", NullValueHandling = NullValueHandling.Ignore)]
-            public Int32? Count { get; set; }
-            [JsonProperty("@odata.nextLink, NullValueHandling = NullValueHandling.Ignore")]
-            public String NextPageLink { get; set; }
-            [JsonProperty("value, NullValueHandling = NullValueHandling.Ignore")]
-            public DataTable Values { get; set; }
-        }
-
-        [Route("")]
+        [Route("Test")]
         [HttpGet]
         public IHttpActionResult Get()
         {
@@ -37,26 +25,14 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 
             ODataTableFilter.Result Output = Source.ApplyODataQuery(this.Request);
 
-            OdataReturn ReturnData = new OdataReturn()
-            {
-                Values = Output.Values
-            };
+            String AddressBase = $"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Host}:{this.Request.RequestUri.Port}";
 
-            if (Output.RequestedOutputFormat == ODataTableFilter.OutputFormat.DataWithMetaDataAndCount)
-            {
-                ReturnData.Count = Output.ValueCount;
-            }
-            else if (Output.RequestedOutputFormat == ODataTableFilter.OutputFormat.DataWithMetaData)
-            {
-                ReturnData.Context = $"http://localhost:50293/api/Test/$metadata";
-            }
+            String EndpointAddress = $"{AddressBase}/api/Test";
+            String MetaDataAddress = $"{AddressBase}/api/$metadata";
 
-            if (!String.IsNullOrWhiteSpace(Output.NextPageQueryString))
-            {
-                ReturnData.NextPageLink = $"http://localhost:50293/api/Test?{Output.NextPageQueryString}";
-            }
+            ODataReturn ReturnData = new ODataReturn(Output, EndpointAddress, MetaDataAddress);
 
-            return Ok<OdataReturn>(ReturnData);
+            return Ok<ODataReturn>(ReturnData);
         }
 
         [Route("$metadata")]
