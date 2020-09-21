@@ -42,6 +42,9 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Microsoft.AspNet.OData, Version=7.5.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
+      <HintPath>..\.packages\Microsoft.AspNet.OData.7.5.0\lib\net45\Microsoft.AspNet.OData.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Bcl.AsyncInterfaces, Version=1.0.0.0, Culture=neutral, PublicKeyToken=cc7b13ffcd2ddd51, processorArchitecture=MSIL">
       <HintPath>..\.packages\Microsoft.Bcl.AsyncInterfaces.1.1.0\lib\net461\Microsoft.Bcl.AsyncInterfaces.dll</HintPath>
     </Reference>
@@ -140,10 +143,6 @@
     </None>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\..\..\OData_WebApi\src\Microsoft.AspNet.OData\Microsoft.AspNet.OData.csproj">
-      <Project>{a6f9775d-f7e2-424e-8363-79644a73038f}</Project>
-      <Name>Microsoft.AspNet.OData</Name>
-    </ProjectReference>
     <ProjectReference Include="..\Mercato.AspNet.OData.DataTable\Mercato.AspNet.OData.DataTable.csproj">
       <Project>{9448a7ee-91f7-4cb0-98c9-c00aaf8880d0}</Project>
       <Name>Mercato.AspNet.OData.DataTable</Name>
