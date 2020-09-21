@@ -241,6 +241,9 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 case EdmPrimitiveTypeKind.Guid:
                     Output = $"'{Output}'";
                     break;
+                case EdmPrimitiveTypeKind.Date:
+                    Output = $"#{Output}#";
+                    break;
             }
 
             return Output;
