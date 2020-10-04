@@ -5,7 +5,7 @@
     <RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
     <AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.2.2</Version>
+    <Version>1.2.3</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Company>Mercato Solutions Ltd</Company>
     <Authors>Mark Middlemist</Authors>
@@ -13,15 +13,16 @@
     <RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
     <PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
 	<Title>ADO.Net DataTable OData support</Title>
-    <AssemblyVersion>1.2.2.11</AssemblyVersion>
-    <PackageReleaseNotes>v1.2.2 - Allowed for support for date based filters
+    <AssemblyVersion>1.2.3.12</AssemblyVersion>
+    <PackageReleaseNotes>v1.2.3 - Allowed for support for DateTimeOffset based filters
+v1.2.2 - Allowed for support for Date based filters
 v1.2.1 - Added the class ODataReturn, which when serialised as the return structure from an API creates the expected structure for OData data services
 v1.2.0 - Added extended support for complex returns fromthe OData intercepts to allow for building of a full OData v4 response message
 v1.1.6 - Updated RowFilter generation to allow GUID input to be used correctly
 v1.1.5 - Specifically set vendorExtension to null in swagger properties
 v1.1.1 - ODataParametersSwaggerDefinition class added to aid adding OData parameter information via Swashbuckle
 v1.0.1 - Simplified extension method added for DataTable</PackageReleaseNotes>
-    <FileVersion>1.2.2.11</FileVersion>
+    <FileVersion>1.2.3.12</FileVersion>
     <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
     <Description>Adds support for OData query syntax over ADO.Net DataTables in WebApi projects.
 This is an initial implementation to allow for core functionality in cases where there is no fixed structure for the datatable at design time, meaning that use of the standard Microsoft.AspNet.OData nuget is precluded by the lack of a fixed EdmModel or underlying Entity source.</Description>

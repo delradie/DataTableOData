@@ -242,6 +242,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
                     Output = $"'{Output}'";
                     break;
                 case EdmPrimitiveTypeKind.Date:
+                case EdmPrimitiveTypeKind.DateTimeOffset:
                     Output = $"#{Output}#";
                     break;
             }
