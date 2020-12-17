@@ -31,10 +31,11 @@ This is an initial implementation to allow for core functionality in cases where
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.0" />
+    <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
-    <PackageReference Include="Microsoft.OData.Core" Version="7.7.1" />
-    <PackageReference Include="Microsoft.OData.Edm" Version="7.7.1" />
+    <PackageReference Include="Microsoft.OData.Core" Version="7.8.0" />
+    <PackageReference Include="Microsoft.OData.Edm" Version="7.8.0" />
+    <PackageReference Include="Microsoft.Spatial" Version="7.8.0" />
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
