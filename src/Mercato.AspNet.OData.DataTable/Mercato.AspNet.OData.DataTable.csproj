@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
     <AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.2.4</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Company>Mercato Solutions Ltd</Company>
@@ -34,9 +34,9 @@ This is an initial implementation to allow for core functionality in cases where
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.OData" Version="7.5.2" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.7" />
-    <PackageReference Include="Microsoft.OData.Core" Version="7.8.0" />
-    <PackageReference Include="Microsoft.OData.Edm" Version="7.8.0" />
-    <PackageReference Include="Microsoft.Spatial" Version="7.8.0" />
+    <PackageReference Include="Microsoft.OData.Core" Version="7.8.1" />
+    <PackageReference Include="Microsoft.OData.Edm" Version="7.8.1" />
+    <PackageReference Include="Microsoft.Spatial" Version="7.8.1" />
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
