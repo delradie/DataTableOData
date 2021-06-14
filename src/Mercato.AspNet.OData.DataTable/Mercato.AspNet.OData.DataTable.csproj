@@ -4,7 +4,7 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
     <AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Version>1.2.6</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Company>Mercato Solutions Ltd</Company>

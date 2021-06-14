@@ -65,7 +65,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// </summary>
         /// <param name="sourceType"></param>
         /// <returns></returns>
-        private static EdmPrimitiveTypeKind? ConvertType(Type sourceType)
+        public static EdmPrimitiveTypeKind? ConvertType(Type sourceType)
         {
             EdmPrimitiveTypeKind? Output = null;
 
