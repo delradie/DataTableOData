@@ -65,7 +65,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// </summary>
         /// <param name="sourceType"></param>
         /// <returns></returns>
-        private static EdmPrimitiveTypeKind? ConvertType(Type sourceType)
+        public static EdmPrimitiveTypeKind? ConvertType(Type sourceType)
         {
             EdmPrimitiveTypeKind? Output = null;
 
@@ -81,9 +81,13 @@ namespace Mercato.AspNet.OData.DataTableExtension
             {
                 Output = EdmPrimitiveTypeKind.Byte;
             }
-            else if (sourceType == typeof(DateTime))
+            else if (sourceType == typeof(Date))
             {
                 Output = EdmPrimitiveTypeKind.Date;
+            }
+            else if (sourceType == typeof(DateTime))
+            {
+                Output = EdmPrimitiveTypeKind.DateTimeOffset;
             }
             else if (sourceType == typeof(Decimal))
             {
