@@ -1,7 +1,10 @@
-﻿using Microsoft.OData.Edm;
+﻿using Microsoft.OData;
+using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Validation;
+
 using Newtonsoft.Json;
+
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -14,9 +17,9 @@ using System.Xml;
 
 namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 {
-    [RoutePrefix("api")]
+    [RoutePrefix("api/v2")]
     public class TestController : ApiController
-    {
+   {
         [Route("Test")]
         [HttpGet]
         public IHttpActionResult Get()
@@ -27,12 +30,21 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 
             String AddressBase = $"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Host}:{this.Request.RequestUri.Port}";
 
-            String EndpointAddress = $"{AddressBase}/api/Test";
-            String MetaDataAddress = $"{AddressBase}/api/$metadata";
+            String EndpointAddress = $"{AddressBase}/api/v2/Test";
+            String MetaDataAddress = $"{AddressBase}/api/v2/$metadata#Test";
 
             ODataReturn ReturnData = new ODataReturn(Output, EndpointAddress, MetaDataAddress);
 
-            return Ok<ODataReturn>(ReturnData);
+            ReturnData.PatchUpValueTypes();
+
+            return ReturnData.GenerateResponseMessage(this);
+        }
+
+        [Route("")]
+        [HttpGet]
+        public IHttpActionResult GetMetadataRoot()
+        {
+            return GetMetadata();
         }
 
         [Route("$metadata")]
@@ -41,10 +53,12 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
         {
             DataTable Source = TestData.GetData();
 
-            Tuple<IEdmModel, IEdmType> InferredEntityModel = Source.BuildEdmModel();
+            Tuple<IEdmModel, IEdmType> InferredEntityModel = Source.BuildEdmModel("Test", "Test");
 
             StringWriter Writer = new StringWriter();
             XmlWriter XWriter = XmlWriter.Create(Writer);
+
+            XWriter.WriteProcessingInstruction("xml", "version='1.0'");
 
             if (CsdlWriter.TryWriteCsdl(InferredEntityModel.Item1, XWriter, CsdlTarget.OData, out IEnumerable<EdmError> errors))
             {
@@ -53,10 +67,20 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 
                 if (!String.IsNullOrWhiteSpace(XmlOutput))
                 {
-                    StringContent OutputContent = new StringContent(XmlOutput);
-                    OutputContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/xml");
+                    HttpResponseMessage Output = new HttpResponseMessage();
 
-                    return ResponseMessage(Request.CreateResponse(HttpStatusCode.OK, XmlOutput, new XmlMediaTypeFormatter()));
+                    Output.StatusCode = HttpStatusCode.OK;
+                    Output.Content = new StringContent(XmlOutput);
+                    Output.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/xml");
+                    Output.Content.Headers.TryAddWithoutValidation(
+                        ODataNegotiatedContentResult.ODataServiceVersionHeader,
+                        ODataUtils.ODataVersionToString(ODataVersion.V4));
+
+
+                    //StringContent OutputContent = new StringContent(XmlOutput);
+                    //OutputContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/xml");
+
+                    return ResponseMessage(Output);
                 }
             }
 

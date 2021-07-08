@@ -9,7 +9,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
         {
             DataTable Output = new DataTable("Test");
 
-            DataColumn IDColumn = Output.Columns.Add("ID", typeof(Int32));
+            DataColumn IDColumn = Output.Columns.Add("TestID", typeof(Int32));
             Output.Columns.Add("Description", typeof(String));
             Output.Columns.Add("Value", typeof(Decimal));
             Output.Columns.Add("LastUpdated", typeof(DateTime));
@@ -20,7 +20,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
 
             DataRow NewRow = Output.NewRow();
 
-            NewRow["ID"] = 1;
+            NewRow["TestID"] = 1;
             NewRow["Description"] = "Mark";
             NewRow["Value"] = 1000000;
             NewRow["LastUpdated"] = DateTime.Now.AddMonths(-1);
@@ -31,7 +31,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
 
             NewRow = Output.NewRow();
 
-            NewRow["ID"] = 2;
+            NewRow["TestID"] = 2;
             NewRow["Description"] = "Neil";
             NewRow["Value"] = 10000000;
             NewRow["LastUpdated"] = DateTime.Now.AddDays(-1);
@@ -42,7 +42,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
 
             NewRow = Output.NewRow();
 
-            NewRow["ID"] = 3;
+            NewRow["TestID"] = 3;
             NewRow["Description"] = "Tom";
             NewRow["Value"] = 10000;
             NewRow["LastUpdated"] = DateTime.Now.AddDays(-5);
@@ -53,7 +53,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
 
             NewRow = Output.NewRow();
 
-            NewRow["ID"] = 4;
+            NewRow["TestID"] = 4;
             NewRow["Description"] = "Jamie";
             NewRow["Value"] = 500000;
             NewRow["LastUpdated"] = DateTime.Now.AddDays(-10);
@@ -64,7 +64,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo
             
             NewRow = Output.NewRow();
 
-            NewRow["ID"] = 5;
+            NewRow["TestID"] = 5;
             NewRow["Description"] = "Neil";
             NewRow["Value"] = 500000;
             NewRow["LastUpdated"] = DateTime.Now.AddDays(-10);

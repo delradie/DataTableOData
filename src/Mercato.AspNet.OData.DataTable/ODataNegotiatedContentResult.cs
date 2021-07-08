@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Net.Http.Formatting;
+using System.Net.Http.Headers;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -13,7 +14,7 @@ using System.Web.Http.Results;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
-    internal class ODataNegotiatedContentResult : OkNegotiatedContentResult<ODataReturn>
+    public class ODataNegotiatedContentResult : OkNegotiatedContentResult<ODataReturn>
     {
         public ODataNegotiatedContentResult(ODataReturn content, ApiController controller) 
         :base(content, controller){ }
@@ -22,10 +23,12 @@ namespace Mercato.AspNet.OData.DataTableExtension
      : base(content, contentNegotiator, request, formatters) { }
 
 
-        internal const string ODataServiceVersionHeader = "OData-Version";
+        public const string ODataServiceVersionHeader = "OData-Version";
 
         public override async Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
         {
+            base.Request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             HttpResponseMessage response = await base.ExecuteAsync(cancellationToken);
 
             response.Headers.TryAddWithoutValidation(
