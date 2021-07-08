@@ -3,6 +3,7 @@
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Web.Http;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
@@ -119,6 +120,11 @@ namespace Mercato.AspNet.OData.DataTableExtension
             {
                 throw;
             }
+        }
+
+        public IHttpActionResult GenerateResponseMessage(ApiController controller)
+        {
+            return new ODataNegotiatedContentResult(this, controller);
         }
     }
 }
