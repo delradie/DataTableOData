@@ -17,7 +17,7 @@ using System.Xml;
 
 namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 {
-    [RoutePrefix("api/v2")]
+    [RoutePrefix("api")]
     public class TestController : ApiController
    {
         [Route("Test")]
@@ -30,13 +30,18 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 
             String AddressBase = $"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Host}:{this.Request.RequestUri.Port}";
 
-            String EndpointAddress = $"{AddressBase}/api/v2/Test";
-            String MetaDataAddress = $"{AddressBase}/api/v2/$metadata#Test";
+            //Path to this endpoint - used for generating Next links when returning paged data
+            String EndpointAddress = $"{AddressBase}/api/Test";
+            //Path to the metadata for this entity's context, including reference to this specific entity set
+            String MetaDataAddress = $"{AddressBase}/api/$metadata#Test";
 
             ODataReturn ReturnData = new ODataReturn(Output, EndpointAddress, MetaDataAddress);
 
+            //Workaround method to convert data columns that are not based on Edm mappable types - currently only known one is DateTime, which is mapped to DateTimeOffset
             ReturnData.PatchUpValueTypes();
 
+            //Returns a specialised OkNegotiatedContentResult that ensures JSON serialisation, and included the OData-Version header
+            // http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#_Toc31358862
             return ReturnData.GenerateResponseMessage(this);
         }
 
@@ -75,10 +80,6 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
                     Output.Content.Headers.TryAddWithoutValidation(
                         ODataNegotiatedContentResult.ODataServiceVersionHeader,
                         ODataUtils.ODataVersionToString(ODataVersion.V4));
-
-
-                    //StringContent OutputContent = new StringContent(XmlOutput);
-                    //OutputContent.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/xml");
 
                     return ResponseMessage(Output);
                 }
