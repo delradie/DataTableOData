@@ -16,7 +16,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// </summary>
         /// <param name="sourceTable"></param>
         /// <returns></returns>
-        public static Tuple<IEdmModel, IEdmType> BuildEdmModel(this DataTable sourceTable, String entityName = null)
+        public static Tuple<IEdmModel, IEdmType> BuildEdmModel(this DataTable sourceTable, String entityName = null, String entitySetName = null)
         {
             String Namespace = "Dynamic";
             String TypeName = sourceTable.TableName;
@@ -56,6 +56,13 @@ namespace Mercato.AspNet.OData.DataTableExtension
             }
 
             Output.AddElement(DataSourceModel);
+
+            if(!String.IsNullOrWhiteSpace(entitySetName))
+            {
+                EdmEntityContainer OutputContainer = Output.AddEntityContainer("Dynamic", "Test");
+
+                OutputContainer.AddEntitySet(entitySetName, DataSourceModel);
+            }
 
             return new Tuple<IEdmModel, IEdmType>(Output, DataSourceModel);
         }
