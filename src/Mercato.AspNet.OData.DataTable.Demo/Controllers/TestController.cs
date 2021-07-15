@@ -45,6 +45,28 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
             return ReturnData.GenerateResponseMessage(this);
         }
 
+        [Route("Test/$count")]
+        [HttpGet]
+        public IHttpActionResult GetCount()
+        {
+            DataTable Source = TestData.GetData();
+
+            ODataTableFilter.Result Output = Source.ApplyODataQuery(this.Request);
+
+            Output.RequestedOutputFormat = ODataTableFilter.OutputFormat.DataWithMetaDataAndCount;
+
+            String AddressBase = $"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Host}:{this.Request.RequestUri.Port}";
+
+            //Path to this endpoint - used for generating Next links when returning paged data
+            String EndpointAddress = $"{AddressBase}/api/Test";
+            //Path to the metadata for this entity's context, including reference to this specific entity set
+            String MetaDataAddress = $"{AddressBase}/api/$metadata#Test";
+
+            ODataReturn ReturnData = new ODataReturn(Output, EndpointAddress, MetaDataAddress);
+
+            return ReturnData.GenerateCountResponseMessage(this);
+        }
+
         [Route("")]
         [HttpGet]
         public IHttpActionResult GetMetadataRoot()
@@ -78,7 +100,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
                     Output.Content = new StringContent(XmlOutput);
                     Output.Content.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/xml");
                     Output.Content.Headers.TryAddWithoutValidation(
-                        ODataNegotiatedContentResult.ODataServiceVersionHeader,
+                        ODataReturnNegotiatedContentResult.ODataServiceVersionHeader,
                         ODataUtils.ODataVersionToString(ODataVersion.V4));
 
                     return ResponseMessage(Output);

@@ -14,12 +14,23 @@ using System.Web.Http.Results;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
-    public class ODataNegotiatedContentResult : OkNegotiatedContentResult<ODataReturn>
+    public class ODataReturnNegotiatedContentResult : ODataNegotiatedContentResult<ODataReturn>
     {
-        public ODataNegotiatedContentResult(ODataReturn content, ApiController controller) 
+        public ODataReturnNegotiatedContentResult(ODataReturn content, ApiController controller)
+            : base(content, controller)
+        { }
+
+        public ODataReturnNegotiatedContentResult(ODataReturn content, IContentNegotiator contentNegotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
+            : base(content, contentNegotiator, request, formatters)
+        { }
+    }
+
+    public class ODataNegotiatedContentResult<T> : OkNegotiatedContentResult<T>
+    {
+        public ODataNegotiatedContentResult(T content, ApiController controller) 
         :base(content, controller){ }
 
-        public ODataNegotiatedContentResult(ODataReturn content, IContentNegotiator contentNegotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
+        public ODataNegotiatedContentResult(T content, IContentNegotiator contentNegotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
      : base(content, contentNegotiator, request, formatters) { }
 
 

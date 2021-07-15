@@ -124,7 +124,12 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
         public IHttpActionResult GenerateResponseMessage(ApiController controller)
         {
-            return new ODataNegotiatedContentResult(this, controller);
+            return new ODataReturnNegotiatedContentResult(this, controller);
+        }
+
+        public IHttpActionResult GenerateCountResponseMessage(ApiController controller)
+        {
+            return new ODataNegotiatedContentResult<Int32>(this.Count ?? 0, controller);
         }
     }
 }
