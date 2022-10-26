@@ -3,15 +3,12 @@ using Microsoft.OData.Edm;
 using Microsoft.OData.Edm.Csdl;
 using Microsoft.OData.Edm.Validation;
 
-using Newtonsoft.Json;
-
 using System;
 using System.Collections.Generic;
 using System.Data;
 using System.IO;
 using System.Net;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Web.Http;
 using System.Xml;
 
@@ -19,7 +16,7 @@ namespace Mercato.AspNet.OData.DataTableExtension.Demo.Controllers
 {
     [RoutePrefix("api")]
     public class TestController : ApiController
-   {
+    {
         [Route("Test")]
         [HttpGet]
         public IHttpActionResult Get()
