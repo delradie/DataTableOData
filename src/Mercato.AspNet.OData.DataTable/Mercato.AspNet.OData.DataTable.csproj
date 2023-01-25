@@ -9,7 +9,7 @@
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Company>Mercato Solutions Ltd</Company>
     <Authors>Mark Middlemist</Authors>
-    <Copyright>c 2019 - 2022 Mercato Solutions Ltd</Copyright>
+    <Copyright>c 2019 - 2023 Mercato Solutions Ltd</Copyright>
     <RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
     <PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
 	<Title>ADO.Net DataTable OData support</Title>
