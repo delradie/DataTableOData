@@ -42,7 +42,6 @@ This is an initial implementation to allow for core functionality in cases where
 
   <ItemGroup>
     <PackageReference Include="Microsoft.AspNet.OData" Version="7.6.3" />
-    <PackageReference Include="Microsoft.AspNet.WebApi.Core" Version="5.2.9" />
     <PackageReference Include="Microsoft.OData.Core" Version="7.14.0" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.14.0" />
     <PackageReference Include="Microsoft.Spatial" Version="7.14.0" />
