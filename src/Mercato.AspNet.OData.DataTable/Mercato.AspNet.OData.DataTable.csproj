@@ -4,8 +4,8 @@
     <TargetFramework>netstandard2.0</TargetFramework>
     <RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
     <AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
-    <Version>1.2.13</Version>
+    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+    <Version>1.2.14</Version>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
     <Company>Mercato Solutions Ltd</Company>
     <Authors>Mark Middlemist</Authors>
@@ -13,8 +13,9 @@
     <RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
     <PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
 	<Title>ADO.Net DataTable OData support</Title>
-    <AssemblyVersion>1.2.13.22</AssemblyVersion>
+    <AssemblyVersion>1.2.14.23</AssemblyVersion>
     <PackageReleaseNotes>
+		v1.2.14 - Nuget dependency updates
 		v1.2.13 - Unneeded Nuget dependency removed
 		v1.2.12 - Nuget dependency updates
 		v1.2.11 - Nuget dependency updates
@@ -42,10 +43,10 @@ This is an initial implementation to allow for core functionality in cases where
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="Microsoft.AspNet.OData" Version="7.6.3" />
-    <PackageReference Include="Microsoft.OData.Core" Version="7.14.0" />
-    <PackageReference Include="Microsoft.OData.Edm" Version="7.14.0" />
-    <PackageReference Include="Microsoft.Spatial" Version="7.14.0" />
+    <PackageReference Include="Microsoft.AspNet.OData" Version="7.7.6" />
+    <PackageReference Include="Microsoft.OData.Core" Version="7.21.3" />
+    <PackageReference Include="Microsoft.OData.Edm" Version="7.21.3" />
+    <PackageReference Include="Microsoft.Spatial" Version="7.21.3" />
     <PackageReference Include="Swashbuckle.Core" Version="5.6.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
