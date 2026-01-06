@@ -16,7 +16,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
 {
     public class ODataReturnNegotiatedContentResult : ODataNegotiatedContentResult<ODataReturn>
     {
-        public ODataReturnNegotiatedContentResult(ODataReturn content, ApiController controller)
+        public ODataReturnNegotiatedContentResult(ODataReturn content, ControllerBase controller)
             : base(content, controller)
         { }
 
