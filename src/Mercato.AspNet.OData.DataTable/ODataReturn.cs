@@ -1,4 +1,6 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+
+using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
@@ -122,7 +124,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
             }
         }
 
-        public IHttpActionResult GenerateResponseMessage(ApiController controller)
+        public IActionResult GenerateResponseMessage(ControllerBase controller)
         {
             return new ODataReturnNegotiatedContentResult(this, controller);
         }

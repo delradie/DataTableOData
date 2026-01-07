@@ -1,4 +1,7 @@
-﻿using Swashbuckle.Swagger;
+﻿using Microsoft.OpenApi;
+
+using Swashbuckle.AspNetCore.SwaggerGen;
+using Swashbuckle.Swagger;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -34,20 +37,21 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// Simple method to append OData parameters to the target operation
         /// </summary>
         /// <param name="operation">Operation object to add parameter information to</param>
-        public static void AppendOdataParametersToOperation(Operation operation)
+        public static void AppendOdataParametersToOperation(OpenApiOperation operation)
         {
-            if (operation.parameters == null)
+            if (operation.Parameters == null)
             {
-                operation.parameters = new List<Parameter>();
+                operation.Parameters = new List<IOpenApiParameter>();
             }
 
-            if (!operation.parameters.Any(x=>String.Equals(x.name, "$filter", StringComparison.InvariantCultureIgnoreCase)))
+            if (!operation.Parameters.Any(x=>String.Equals(x.Name, "$filter", StringComparison.InvariantCultureIgnoreCase)))
             {
-                operation.parameters.Add(new Parameter
+                operation.Parameters.Add(new OpenApiParameter
                 {
-                    name = "$filter",
-                    description = "Filter the results using OData syntax.",
-                    required = false,
+                    Name = "$filter",
+                    Description = "Filter the results using OData syntax.",
+                    Required = false,
+                    
                     type = "string",
                     vendorExtensions = null,
                     @in = "query"
@@ -116,6 +120,11 @@ namespace Mercato.AspNet.OData.DataTableExtension
             //    @in = "query"
             //});
 
+        }
+
+        public void Apply(OpenApiOperation operation, OperationFilterContext context)
+        {
+            throw new NotImplementedException();
         }
     }
 }

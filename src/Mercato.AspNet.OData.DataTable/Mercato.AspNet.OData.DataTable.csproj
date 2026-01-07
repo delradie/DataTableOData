@@ -49,9 +49,13 @@ This is an initial implementation to allow for core functionality in cases where
     <PackageReference Include="Microsoft.OData.Core" Version="7.21.4" />
     <PackageReference Include="Microsoft.OData.Edm" Version="7.21.4" />
     <PackageReference Include="Microsoft.Spatial" Version="7.21.4" />
+    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="10.1.0" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
   </ItemGroup>
-
+	<ItemGroup>
+		<FrameworkReference Include="Microsoft.AspNetCore.App" />
+	</ItemGroup>
   <ItemGroup>
     <None Include="..\..\LICENSE">
       <Pack>True</Pack>

@@ -1,16 +1,11 @@
-﻿using Microsoft.AspNet.OData.Routing;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.OData;
 
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
-using System.Net.Http.Formatting;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
-using System.Web.Http;
-using System.Web.Http.Results;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
@@ -27,8 +22,8 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
     public class ODataNegotiatedContentResult<T> : OkNegotiatedContentResult<T>
     {
-        public ODataNegotiatedContentResult(T content, ApiController controller) 
-        :base(content, controller){ }
+        public ODataNegotiatedContentResult(T content, ControllerBase controller)
+        : base(content, controller) { }
 
         public ODataNegotiatedContentResult(T content, IContentNegotiator contentNegotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
      : base(content, contentNegotiator, request, formatters) { }
