@@ -54,7 +54,7 @@ public class TestController : ControllerBase
 
         Output.RequestedOutputFormat = ODataTableFilter.OutputFormat.DataWithMetaDataAndCount;
 
-        String AddressBase = $"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Host}:{this.Request.RequestUri.Port}";
+        String AddressBase = $"{this.Request.Scheme}://{this.Request.Host.Host}:{this.Request.Host.Port}";
 
         //Path to this endpoint - used for generating Next links when returning paged data
         String EndpointAddress = $"{AddressBase}/api/Test";
@@ -63,7 +63,7 @@ public class TestController : ControllerBase
 
         ODataReturn ReturnData = new ODataReturn(Output, EndpointAddress, MetaDataAddress);
 
-        return ReturnData.GenerateCountResponseMessage(this);
+        return ReturnData.GenerateCountResponseMessage();
     }
 
     [Route("")]
