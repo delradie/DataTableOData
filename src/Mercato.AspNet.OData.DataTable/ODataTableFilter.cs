@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.OData.Edm;
 using Microsoft.OData.UriParser;
 
@@ -35,7 +36,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
         {
             Tuple<IEdmModel, IEdmType> SourceModel = datasourceEdmProperties ?? sourceData.BuildEdmModel();
 
-            Routing.ODataPath Path = request.ODataProperties().Path;
+            ODataPath Path = request.ODataProperties().Path;
 
             ODataQueryContext SourceContext = new ODataQueryContext(SourceModel.Item1, SourceModel.Item2, Path);
 
