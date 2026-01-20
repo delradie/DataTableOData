@@ -1,47 +1,56 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.OData;
 
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Threading;
 using System.Threading.Tasks;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
     public class ODataReturnNegotiatedContentResult : ODataNegotiatedContentResult<ODataReturn>
     {
-        public ODataReturnNegotiatedContentResult(ODataReturn content, ControllerBase controller)
-            : base(content, controller)
-        { }
-
-        public ODataReturnNegotiatedContentResult(ODataReturn content, IContentNegotiator contentNegotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
-            : base(content, contentNegotiator, request, formatters)
+        public ODataReturnNegotiatedContentResult(ODataReturn content)
+            : base(content)
         { }
     }
 
-    public class ODataNegotiatedContentResult<T> : OkNegotiatedContentResult<T>
+    public class ODataNegotiatedContentResult<T> : OkObjectResult
     {
-        public ODataNegotiatedContentResult(T content, ControllerBase controller)
-        : base(content, controller) { }
-
-        public ODataNegotiatedContentResult(T content, IContentNegotiator contentNegotiator, HttpRequestMessage request, IEnumerable<MediaTypeFormatter> formatters)
-     : base(content, contentNegotiator, request, formatters) { }
+        public ODataNegotiatedContentResult(T content)
+        : base(content) { }
 
 
         public const string ODataServiceVersionHeader = "OData-Version";
 
-        public override async Task<HttpResponseMessage> ExecuteAsync(CancellationToken cancellationToken)
+        public override void ExecuteResult(ActionContext context)
         {
-            base.Request.Headers.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+            if (context.HttpContext.Request.Headers.ContainsKey("Accept"))
+            {
+                context.HttpContext.Request.Headers.Remove("Accept");
+            }
 
-            HttpResponseMessage response = await base.ExecuteAsync(cancellationToken);
+            context.HttpContext.Request.Headers.Append("Accept", "application/json");
 
-            response.Headers.TryAddWithoutValidation(
+            base.ExecuteResult(context);
+
+            context.HttpContext.Response.Headers.Append(
                 ODataServiceVersionHeader,
                 ODataUtils.ODataVersionToString(ODataVersion.V4));
+        }
 
-            return response;
+        public override async Task ExecuteResultAsync(ActionContext context)
+        {
+            if (context.HttpContext.Request.Headers.ContainsKey("Accept"))
+            {
+                context.HttpContext.Request.Headers.Remove("Accept");
+            }
+
+            context.HttpContext.Request.Headers.Append("Accept", "application/json");
+
+            await base.ExecuteResultAsync(context);
+
+            context.HttpContext.Response.Headers.Append(
+                ODataServiceVersionHeader,
+                ODataUtils.ODataVersionToString(ODataVersion.V4));
         }
     }
 }

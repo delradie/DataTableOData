@@ -5,7 +5,6 @@ using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Web.Http;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
@@ -124,14 +123,14 @@ namespace Mercato.AspNet.OData.DataTableExtension
             }
         }
 
-        public IActionResult GenerateResponseMessage(ControllerBase controller)
+        public IActionResult GenerateResponseMessage()
         {
-            return new ODataReturnNegotiatedContentResult(this, controller);
+            return new ODataReturnNegotiatedContentResult(this);
         }
 
-        public IHttpActionResult GenerateCountResponseMessage(ApiController controller)
+        public IActionResult GenerateCountResponseMessage()
         {
-            return new ODataNegotiatedContentResult<Int32>(this.Count ?? 0, controller);
+            return new ODataNegotiatedContentResult<Int32>(this.Count ?? 0);
         }
     }
 }
