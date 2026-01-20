@@ -12,7 +12,7 @@ public class TestController : ControllerBase
 {
     [Route("Test")]
     [HttpGet]
-    public IHttpActionResult Get()
+    public IActionResult Get()
     {
         DataTable Source = TestData.GetData();
 
@@ -37,7 +37,7 @@ public class TestController : ControllerBase
 
     //[Route("Test/$count")]
     //[HttpGet]
-    //public IHttpActionResult GetCount()
+    //public IActionResult GetCount()
     //{
     //    DataTable Source = TestData.GetData();
 
@@ -59,14 +59,14 @@ public class TestController : ControllerBase
 
     //[Route("")]
     //[HttpGet]
-    //public IHttpActionResult GetMetadataRoot()
+    //public IActionResult GetMetadataRoot()
     //{
     //    return GetMetadata();
     //}
 
     //[Route("$metadata")]
     //[HttpGet]
-    //public IHttpActionResult GetMetadata()
+    //public IActionResult GetMetadata()
     //{
     //    DataTable Source = TestData.GetData();
 
