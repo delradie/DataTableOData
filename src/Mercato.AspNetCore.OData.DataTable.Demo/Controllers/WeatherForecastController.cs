@@ -1,6 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 
-namespace Mercato.AspNetCore.OData.DataTable.Demo.Controllers;
+namespace Mercato.AspNetCore.OData.DataTableExtension.Demo.Controllers;
 
 [ApiController]
 [Route("[controller]")]

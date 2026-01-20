@@ -1,4 +1,4 @@
-namespace Mercato.AspNetCore.OData.DataTable.Demo;
+namespace Mercato.AspNetCore.OData.DataTableExtension.Demo;
 
 public class Program
 {
