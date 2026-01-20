@@ -1,11 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.28922.388
+# Visual Studio Version 18
+VisualStudioVersion = 18.3.11408.92 d18.3
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Mercato.AspNet.OData.DataTable", "..\src\Mercato.AspNet.OData.DataTable\Mercato.AspNet.OData.DataTable.csproj", "{9448A7EE-91F7-4CB0-98C9-C00AAF8880D0}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercato.AspNet.OData.DataTable.Demo", "..\src\Mercato.AspNet.OData.DataTable.Demo\Mercato.AspNet.OData.DataTable.Demo.csproj", "{06871B3A-9424-4870-8B33-F9B1E2521B1C}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Mercato.AspNetCore.OData.DataTable.Demo", "..\src\Mercato.AspNetCore.OData.DataTable.Demo\Mercato.AspNetCore.OData.DataTable.Demo.csproj", "{E0F5F481-96F8-4952-B54E-2D84B43105A7}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -26,6 +28,12 @@ Global
 		{06871B3A-9424-4870-8B33-F9B1E2521B1C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{06871B3A-9424-4870-8B33-F9B1E2521B1C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{06871B3A-9424-4870-8B33-F9B1E2521B1C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E0F5F481-96F8-4952-B54E-2D84B43105A7}.CodeAnalysis|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F5F481-96F8-4952-B54E-2D84B43105A7}.CodeAnalysis|Any CPU.Build.0 = Debug|Any CPU
+		{E0F5F481-96F8-4952-B54E-2D84B43105A7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E0F5F481-96F8-4952-B54E-2D84B43105A7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E0F5F481-96F8-4952-B54E-2D84B43105A7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E0F5F481-96F8-4952-B54E-2D84B43105A7}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
