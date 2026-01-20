@@ -8,7 +8,8 @@ public class Program
 
         // Add services to the container.
 
-        builder.Services.AddControllers();
+        builder.Services.AddControllers()
+            .AddNewtonsoftJson();
 
         var app = builder.Build();
 
