@@ -92,6 +92,10 @@ namespace Mercato.AspNet.OData.DataTableExtension
             {
                 Output = EdmPrimitiveTypeKind.Date;
             }
+            else if (sourceType == typeof(DateOnly))
+            {
+                Output = EdmPrimitiveTypeKind.Date;
+            }
             else if (sourceType == typeof(DateTime))
             {
                 Output = EdmPrimitiveTypeKind.DateTimeOffset;

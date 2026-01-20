@@ -5,6 +5,10 @@
     <Nullable>enable</Nullable>
     <ImplicitUsings>enable</ImplicitUsings>
     <RootNamespace>Mercato.AspNetCore.OData.DataTableExtension.Demo</RootNamespace>
+	  <Platforms>x64</Platforms>
+	  <RuntimeIdentifier>win-x64</RuntimeIdentifier>
+	  <RuntimeIdentifiers>win-x64</RuntimeIdentifiers>
+	  <Configurations>Debug;Release</Configurations>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,4 +1,5 @@
-﻿using Mercato.AspNetCore.OData.DataTableExtension.Demo.Test;
+﻿using Mercato.AspNet.OData.DataTableExtension;
+using Mercato.AspNetCore.OData.DataTableExtension.Demo.Test;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -18,7 +19,7 @@ public class TestController : ControllerBase
 
         ODataTableFilter.Result Output = Source.ApplyODataQuery(this.Request);
 
-        String AddressBase = $"{this.Request.RequestUri.Scheme}://{this.Request.RequestUri.Host}:{this.Request.RequestUri.Port}";
+        String AddressBase = $"{this.Request.Scheme}://{this.Request.Host.Host}:{this.Request.Host.Port}";
 
         //Path to this endpoint - used for generating Next links when returning paged data
         String EndpointAddress = $"{AddressBase}/api/Test";
@@ -32,7 +33,7 @@ public class TestController : ControllerBase
 
         //Returns a specialised OkNegotiatedContentResult that ensures JSON serialisation, and included the OData-Version header
         // http://docs.oasis-open.org/odata/odata/v4.01/odata-v4.01-part1-protocol.html#_Toc31358862
-        return ReturnData.GenerateResponseMessage(this);
+        return ReturnData.GenerateResponseMessage();
     }
 
     //[Route("Test/$count")]
