@@ -30,11 +30,11 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
             context.HttpContext.Request.Headers.Append("Accept", "application/json");
 
-            base.ExecuteResult(context);
-
             context.HttpContext.Response.Headers.Append(
                 ODataServiceVersionHeader,
                 ODataUtils.ODataVersionToString(ODataVersion.V4));
+
+            base.ExecuteResult(context);
         }
 
         public override async Task ExecuteResultAsync(ActionContext context)
@@ -46,11 +46,11 @@ namespace Mercato.AspNet.OData.DataTableExtension
 
             context.HttpContext.Request.Headers.Append("Accept", "application/json");
 
-            await base.ExecuteResultAsync(context);
-
             context.HttpContext.Response.Headers.Append(
                 ODataServiceVersionHeader,
                 ODataUtils.ODataVersionToString(ODataVersion.V4));
+
+            await base.ExecuteResultAsync(context);
         }
     }
 }
