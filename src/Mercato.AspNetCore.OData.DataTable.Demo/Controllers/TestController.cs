@@ -16,7 +16,7 @@ using EdmError = Microsoft.OData.Edm.Validation.EdmError;
 namespace Mercato.AspNetCore.OData.DataTableExtension.Demo.Controllers;
 
 [ApiController]
-[Route("api/[controller]")]
+[Route("api")]
 public class TestController : ControllerBase
 {
     [Route("Test")]
