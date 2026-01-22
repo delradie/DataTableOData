@@ -1,7 +1,4 @@
-﻿using Microsoft.AspNetCore.Mvc.ApiExplorer;
-using Microsoft.OpenApi;
-
-using Swashbuckle.AspNetCore.SwaggerGen;
+﻿using Microsoft.OpenApi;
 
 using System;
 using System.Collections.Generic;
@@ -14,7 +11,7 @@ namespace Mercato.AspNet.OData.DataTableExtension
     /// Taken from https://stackoverflow.com/questions/41973356/is-there-a-way-to-get-swashbuckle-to-add-odata-parameters-to-web-api-2-iqueryabl
     /// Updated for aspnetcore
     /// </summary>
-    public class ODataParametersSwaggerDefinition : IOperationFilter
+    public class ODataParametersSwaggerDefinition
     {
         private static readonly Type QueryableType = typeof(IQueryable);
 
@@ -114,29 +111,6 @@ namespace Mercato.AspNet.OData.DataTableExtension
             //    @in = "query"
             //});
 
-        }
-
-        /// <summary>
-        /// Apply the filter to the operation.
-        /// </summary>
-        /// <param name="operation">The API operation to check.</param>
-        /// <param name="context">Full context</param>
-        public void Apply(OpenApiOperation operation, OperationFilterContext context)
-        {
-            foreach (ApiResponseType SupportedResponse in context.ApiDescription.SupportedResponseTypes)
-            {
-                if (SupportedResponse.Type is null)
-                {
-                    continue;
-                }
-
-                Type ResponseType = SupportedResponse.Type;
-
-                if (ResponseType.GetInterfaces().Any(i => i == QueryableType))
-                {
-                    AppendOdataParametersToOperation(operation);
-                }
-            }
         }
     }
 }
