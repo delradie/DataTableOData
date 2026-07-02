@@ -86,7 +86,7 @@ public class TestController : ControllerBase
 
         XWriter.WriteProcessingInstruction("xml", "version='1.0'");
 
-        if (CsdlWriter.TryWriteCsdl(InferredEntityModel.Item1, XWriter, CsdlTarget.OData, out IEnumerable<EdmError> errors))
+        if (CsdlWriter.TryWriteCsdl(InferredEntityModel.Item1, XWriter, out IEnumerable<EdmError> errors))
         {
             XWriter.Flush();
             String XmlOutput = Writer.ToString();

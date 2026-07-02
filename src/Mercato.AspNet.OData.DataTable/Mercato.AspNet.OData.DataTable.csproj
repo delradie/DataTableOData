@@ -47,6 +47,7 @@
 		<PackageIconUrl></PackageIconUrl>
 		<PackageTags>WebApi AspNetWebApi OData Data Database ADO.NET</PackageTags>
 		<Platforms>AnyCPU;x64</Platforms>
+		<Configurations>Debug;Release</Configurations>
 	</PropertyGroup>
 
 	<ItemGroup>

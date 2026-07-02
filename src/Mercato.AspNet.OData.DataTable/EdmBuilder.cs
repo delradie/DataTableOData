@@ -88,12 +88,6 @@ namespace Mercato.AspNet.OData.DataTableExtension
             {
                 Output = EdmPrimitiveTypeKind.Byte;
             }
-#if NET8_0
-            else if (sourceType == typeof(Date))
-            {
-                Output = EdmPrimitiveTypeKind.Date;
-            }
-#endif
             else if (sourceType == typeof(DateOnly))
             {
                 Output = EdmPrimitiveTypeKind.Date;
