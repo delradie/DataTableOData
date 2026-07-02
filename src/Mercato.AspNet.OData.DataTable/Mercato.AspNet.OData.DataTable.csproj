@@ -6,7 +6,7 @@
 		<RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
 		<AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-		<Version>2.0.0-pre1</Version>
+		<Version>2.0.0</Version>
 		<PackageLicenseFile>LICENSE</PackageLicenseFile>
 		<Company>Mercato Solutions Ltd</Company>
 		<Authors>Mark Middlemist</Authors>
@@ -14,9 +14,9 @@
 		<RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
 		<PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
 		<Title>ADO.Net DataTable OData support</Title>
-		<AssemblyVersion>2.0.0.25</AssemblyVersion>
+		<AssemblyVersion>2.0.0.26</AssemblyVersion>
 		<PackageReleaseNotes>
-			v2.0.0 - Update to net8 / ASP.net core 8 support
+			v2.0.0 - Update to net8 and 10 support
 			v1.2.15 - Nuget dependency updates including transitive AspNet
 			v1.2.14 - Nuget dependency updates
 			v1.2.13 - Unneeded Nuget dependency removed
@@ -38,7 +38,7 @@
 			v1.1.1 - ODataParametersSwaggerDefinition class added to aid adding OData parameter information via Swashbuckle
 			v1.0.1 - Simplified extension method added for DataTable
 		</PackageReleaseNotes>
-		<FileVersion>2.0.0.25</FileVersion>
+		<FileVersion>2.0.0.26</FileVersion>
 		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
 		<Description>
 			Adds support for OData query syntax over ADO.Net DataTables in WebApi projects.
