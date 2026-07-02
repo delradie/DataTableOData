@@ -50,7 +50,7 @@ This is an initial implementation to allow for core functionality in cases where
     <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.4.1" />
     <PackageReference Include="Microsoft.OData.Core" Version="8.4.3" />
     <PackageReference Include="Microsoft.OData.Edm" Version="8.4.3" />
-    <PackageReference Include="Microsoft.OpenApi" Version="3.3.0" />
+    <PackageReference Include="Microsoft.OpenApi" Version="3.7.0" />
     <PackageReference Include="Microsoft.Spatial" Version="8.4.3" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
     <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
