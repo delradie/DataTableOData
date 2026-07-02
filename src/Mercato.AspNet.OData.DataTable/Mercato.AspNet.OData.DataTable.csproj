@@ -1,68 +1,79 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
-  <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
-	  <TargetFrameworks>net8.0;net10.0</TargetFrameworks>
-    <RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
-    <AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <Version>2.0.0-pre1</Version>
-    <PackageLicenseFile>LICENSE</PackageLicenseFile>
-    <Company>Mercato Solutions Ltd</Company>
-    <Authors>Mark Middlemist</Authors>
-    <Copyright>c 2019 - 2026 Mercato Solutions Ltd</Copyright>
-    <RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
-    <PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
-	<Title>ADO.Net DataTable OData support</Title>
-    <AssemblyVersion>2.0.0.25</AssemblyVersion>
-    <PackageReleaseNotes>
-		v2.0.0 - Update to net8 / ASP.net core 8 support
-		v1.2.15 - Nuget dependency updates including transitive AspNet
-		v1.2.14 - Nuget dependency updates
-		v1.2.13 - Unneeded Nuget dependency removed
-		v1.2.12 - Nuget dependency updates
-		v1.2.11 - Nuget dependency updates
-		v1.2.10 - Nuget dependency updates
-		v1.2.9 - Updates to support count response
-		v1.2.8 - Updates to support returning HTTP responses with the correct OData headers
-		v1.2.7 - Structure fixes
-		v1.2.6 - DateTime metadata conversion to DateTimeOffset rather than Date
-		v1.2.5 - Dependency updates
-		v1.2.4 - Dependency updates
-		v1.2.3 - Allowed for support for DateTimeOffset based filters
-		v1.2.2 - Allowed for support for Date based filters
-		v1.2.1 - Added the class ODataReturn, which when serialised as the return structure from an API creates the expected structure for OData data services
-		v1.2.0 - Added extended support for complex returns fromthe OData intercepts to allow for building of a full OData v4 response message
-		v1.1.6 - Updated RowFilter generation to allow GUID input to be used correctly
-		v1.1.5 - Specifically set vendorExtension to null in swagger properties
-		v1.1.1 - ODataParametersSwaggerDefinition class added to aid adding OData parameter information via Swashbuckle
-		v1.0.1 - Simplified extension method added for DataTable</PackageReleaseNotes>
-    <FileVersion>2.0.0.25</FileVersion>
-    <PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
-    <Description>Adds support for OData query syntax over ADO.Net DataTables in WebApi projects.
-This is an initial implementation to allow for core functionality in cases where there is no fixed structure for the datatable at design time, meaning that use of the standard Microsoft.AspNet.OData nuget is precluded by the lack of a fixed EdmModel or underlying Entity source.</Description>
-    <PackageIconUrl></PackageIconUrl>
-    <PackageTags>WebApi AspNetWebApi OData Data Database ADO.NET</PackageTags>
-    <Platforms>AnyCPU;x64</Platforms>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net8.0</TargetFramework>
+		<TargetFrameworks>net8.0;net10.0</TargetFrameworks>
+		<RootNamespace>Mercato.AspNet.OData.DataTableExtension</RootNamespace>
+		<AssemblyName>Mercato.AspNet.OData.DataTableExtension</AssemblyName>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<Version>2.0.0-pre1</Version>
+		<PackageLicenseFile>LICENSE</PackageLicenseFile>
+		<Company>Mercato Solutions Ltd</Company>
+		<Authors>Mark Middlemist</Authors>
+		<Copyright>c 2019 - 2026 Mercato Solutions Ltd</Copyright>
+		<RepositoryUrl>https://github.com/delradie/DataTableOData</RepositoryUrl>
+		<PackageProjectUrl>https://github.com/delradie/DataTableOData</PackageProjectUrl>
+		<Title>ADO.Net DataTable OData support</Title>
+		<AssemblyVersion>2.0.0.25</AssemblyVersion>
+		<PackageReleaseNotes>
+			v2.0.0 - Update to net8 / ASP.net core 8 support
+			v1.2.15 - Nuget dependency updates including transitive AspNet
+			v1.2.14 - Nuget dependency updates
+			v1.2.13 - Unneeded Nuget dependency removed
+			v1.2.12 - Nuget dependency updates
+			v1.2.11 - Nuget dependency updates
+			v1.2.10 - Nuget dependency updates
+			v1.2.9 - Updates to support count response
+			v1.2.8 - Updates to support returning HTTP responses with the correct OData headers
+			v1.2.7 - Structure fixes
+			v1.2.6 - DateTime metadata conversion to DateTimeOffset rather than Date
+			v1.2.5 - Dependency updates
+			v1.2.4 - Dependency updates
+			v1.2.3 - Allowed for support for DateTimeOffset based filters
+			v1.2.2 - Allowed for support for Date based filters
+			v1.2.1 - Added the class ODataReturn, which when serialised as the return structure from an API creates the expected structure for OData data services
+			v1.2.0 - Added extended support for complex returns fromthe OData intercepts to allow for building of a full OData v4 response message
+			v1.1.6 - Updated RowFilter generation to allow GUID input to be used correctly
+			v1.1.5 - Specifically set vendorExtension to null in swagger properties
+			v1.1.1 - ODataParametersSwaggerDefinition class added to aid adding OData parameter information via Swashbuckle
+			v1.0.1 - Simplified extension method added for DataTable
+		</PackageReleaseNotes>
+		<FileVersion>2.0.0.25</FileVersion>
+		<PackageRequireLicenseAcceptance>true</PackageRequireLicenseAcceptance>
+		<Description>
+			Adds support for OData query syntax over ADO.Net DataTables in WebApi projects.
+			This is an initial implementation to allow for core functionality in cases where there is no fixed structure for the datatable at design time, meaning that use of the standard Microsoft.AspNet.OData nuget is precluded by the lack of a fixed EdmModel or underlying Entity source.
+		</Description>
+		<PackageIconUrl></PackageIconUrl>
+		<PackageTags>WebApi AspNetWebApi OData Data Database ADO.NET</PackageTags>
+		<Platforms>AnyCPU;x64</Platforms>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.OData" Version="9.4.1" />
-    <PackageReference Include="Microsoft.OData.Core" Version="8.4.3" />
-    <PackageReference Include="Microsoft.OData.Edm" Version="8.4.3" />
-    <PackageReference Include="Microsoft.OpenApi" Version="3.7.0" />
-    <PackageReference Include="Microsoft.Spatial" Version="8.4.3" />
-    <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
-    <PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.OpenApi" Version="3.7.0" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+		<PackageReference Include="System.Data.DataSetExtensions" Version="4.5.0" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net8.0' ">
+		<PackageReference Include="Microsoft.AspNetCore.OData" Version="9.4.1" />
+		<PackageReference Include="Microsoft.OData.Core" Version="8.4.3" />
+		<PackageReference Include="Microsoft.OData.Edm" Version="8.4.3" />
+		<PackageReference Include="Microsoft.Spatial" Version="8.4.3" />
+	</ItemGroup>
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net10.0' ">
+		<PackageReference Include="Microsoft.AspNetCore.OData" Version="10.0.0-preview.2" />
+		<PackageReference Include="Microsoft.OData.Core" Version="9.0.0-rc" />
+		<PackageReference Include="Microsoft.OData.Edm" Version="9.0.0-rc" />
+		<PackageReference Include="Microsoft.Spatial" Version="9.0.0-rc" />
+	</ItemGroup>
 	<ItemGroup>
 		<FrameworkReference Include="Microsoft.AspNetCore.App" />
 	</ItemGroup>
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
-  </ItemGroup>  
+	<ItemGroup>
+		<None Include="..\..\LICENSE">
+			<Pack>True</Pack>
+			<PackagePath></PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
