@@ -1,0 +1,18 @@
+<Solution>
+  <Configurations>
+    <BuildType Name="CodeAnalysis" />
+    <BuildType Name="Debug" />
+    <BuildType Name="Release" />
+    <Platform Name="Any CPU" />
+    <Platform Name="x64" />
+  </Configurations>
+  <Project Path="../src/Mercato.AspNet.OData.DataTable/Mercato.AspNet.OData.DataTable.csproj">
+    <BuildType Solution="CodeAnalysis|Any CPU" Project="Release" />
+    <BuildType Solution="CodeAnalysis|x64" Project="Debug" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+  <Project Path="../src/Mercato.AspNetCore.OData.DataTable.Demo/Mercato.AspNetCore.OData.DataTable.Demo.csproj">
+    <BuildType Solution="CodeAnalysis|*" Project="Debug" />
+    <Platform Solution="*|x64" Project="x64" />
+  </Project>
+</Solution>
