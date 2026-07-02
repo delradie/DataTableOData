@@ -1,6 +1,6 @@
-﻿using Microsoft.AspNet.OData;
-using Microsoft.AspNet.OData.Extensions;
-using Microsoft.AspNet.OData.Query;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.OData.Extensions;
+using Microsoft.AspNetCore.OData.Query;
 using Microsoft.OData.Edm;
 using Microsoft.OData.UriParser;
 
@@ -8,9 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Linq;
-using System.Net.Http;
 using System.Text;
-using Routing = Microsoft.AspNet.OData.Routing;
+//using Routing = Microsoft.AspNet.OData.Routing;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
@@ -33,11 +32,11 @@ namespace Mercato.AspNet.OData.DataTableExtension
             public OutputFormat RequestedOutputFormat { get; set; }
         }
 
-        public static Result ApplyODataQuery(this DataTable sourceData, HttpRequestMessage request, Tuple<IEdmModel, IEdmType> datasourceEdmProperties = null)
+        public static Result ApplyODataQuery(this DataTable sourceData, HttpRequest request, Tuple<IEdmModel, IEdmType> datasourceEdmProperties = null)
         {
             Tuple<IEdmModel, IEdmType> SourceModel = datasourceEdmProperties ?? sourceData.BuildEdmModel();
 
-            Routing.ODataPath Path = request.ODataProperties().Path;
+            ODataPath Path = request.ODataFeature().Path;
 
             ODataQueryContext SourceContext = new ODataQueryContext(SourceModel.Item1, SourceModel.Item2, Path);
 
@@ -120,26 +119,26 @@ namespace Mercato.AspNet.OData.DataTableExtension
                 return String.Empty;
             }
 
-            if(criteria.Top == null || criteria.Top.Value <= 0)
+            if (criteria.Top == null || criteria.Top.Value <= 0)
             {
                 return String.Empty;
             }
 
             Int32 Skip = criteria.Top.Value;
 
-            if(criteria.Skip != null && criteria.Skip.Value > 0)
+            if (criteria.Skip != null && criteria.Skip.Value > 0)
             {
                 Skip += criteria.Skip.Value;
             }
 
-            if(Skip >= rowCount)
+            if (Skip >= rowCount)
             {
                 return String.Empty;
             }
 
             StringBuilder QueryStringBuilder = new StringBuilder(512);
 
-            if(criteria.Filter != null && !String.IsNullOrWhiteSpace(criteria.Filter.RawValue))
+            if (criteria.Filter != null && !String.IsNullOrWhiteSpace(criteria.Filter.RawValue))
             {
                 QueryStringBuilder.Append($"&$filter={criteria.Filter.RawValue}");
             }

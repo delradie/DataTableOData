@@ -1,9 +1,10 @@
-﻿using Newtonsoft.Json;
+﻿using Microsoft.AspNetCore.Mvc;
+
+using Newtonsoft.Json;
 
 using System;
 using System.Collections.Generic;
 using System.Data;
-using System.Web.Http;
 
 namespace Mercato.AspNet.OData.DataTableExtension
 {
@@ -43,34 +44,27 @@ namespace Mercato.AspNet.OData.DataTableExtension
         /// </summary>
         public void PatchUpValueTypes()
         {
-            try
+            if (Values == null || Values.Columns.Count == 0)
             {
-                if (Values == null || Values.Columns.Count == 0)
-                {
-                    return;
-                }
+                return;
+            }
 
-                Dictionary<String, Type> RequiredUpdates = new Dictionary<String, Type>();
+            Dictionary<String, Type> RequiredUpdates = new Dictionary<String, Type>();
 
-                foreach (DataColumn Column in Values.Columns)
+            foreach (DataColumn Column in Values.Columns)
+            {
+                if (Column.DataType == typeof(DateTime))
                 {
-                    if (Column.DataType == typeof(DateTime))
-                    {
-                        RequiredUpdates.Add(Column.ColumnName, typeof(DateTimeOffset));
-                    }
-                }
-
-                if (RequiredUpdates.Count > 0)
-                {
-                    foreach (KeyValuePair<String, Type> Update in RequiredUpdates)
-                    {
-                        ConvertColumnType(Values, Update.Key, Update.Value);
-                    }
+                    RequiredUpdates.Add(Column.ColumnName, typeof(DateTimeOffset));
                 }
             }
-            catch (Exception exc)
+
+            if (RequiredUpdates.Count > 0)
             {
-                throw;
+                foreach (KeyValuePair<String, Type> Update in RequiredUpdates)
+                {
+                    ConvertColumnType(Values, Update.Key, Update.Value);
+                }
             }
         }
 
@@ -78,58 +72,51 @@ namespace Mercato.AspNet.OData.DataTableExtension
         {
             Boolean UseDateTimeOffsetConversion = false;
 
-            try
+            using (DataColumn dc = new DataColumn(columnName + "_new", newType))
             {
-                using (DataColumn dc = new DataColumn(columnName + "_new", newType))
+                // Add the new column which has the new type, and move it to the ordinal of the old column
+                int ordinal = dt.Columns[columnName].Ordinal;
+                Type SourceType = dt.Columns[columnName].DataType;
+
+                UseDateTimeOffsetConversion = (SourceType == typeof(DateTime) && newType == typeof(DateTimeOffset));
+
+                dt.Columns.Add(dc);
+                dc.SetOrdinal(ordinal);
+
+                // Get and convert the values of the old column, and insert them into the new
+                foreach (DataRow dr in dt.Rows)
                 {
-                    // Add the new column which has the new type, and move it to the ordinal of the old column
-                    int ordinal = dt.Columns[columnName].Ordinal;
-                    Type SourceType = dt.Columns[columnName].DataType;
+                    //if (dr.IsNull(dc.ColumnName))
+                    //{
+                    //    continue;
+                    //}
 
-                    UseDateTimeOffsetConversion = (SourceType == typeof(DateTime) && newType == typeof(DateTimeOffset));
-
-                    dt.Columns.Add(dc);
-                    dc.SetOrdinal(ordinal);
-
-                    // Get and convert the values of the old column, and insert them into the new
-                    foreach (DataRow dr in dt.Rows)
+                    if (UseDateTimeOffsetConversion)
                     {
-                        //if (dr.IsNull(dc.ColumnName))
-                        //{
-                        //    continue;
-                        //}
-
-                        if (UseDateTimeOffsetConversion)
-                        {
-                            dr[dc.ColumnName] = (DateTimeOffset)((DateTime)dr[columnName]);
-                        }
-                        else
-                        {
-                            dr[dc.ColumnName] = Convert.ChangeType(dr[columnName], newType);
-                        }
+                        dr[dc.ColumnName] = (DateTimeOffset)((DateTime)dr[columnName]);
                     }
-
-                    // Remove the old column
-                    dt.Columns.Remove(columnName);
-
-                    // Give the new column the old column's name
-                    dc.ColumnName = columnName;
+                    else
+                    {
+                        dr[dc.ColumnName] = Convert.ChangeType(dr[columnName], newType);
+                    }
                 }
-            }
-            catch (Exception exc)
-            {
-                throw;
+
+                // Remove the old column
+                dt.Columns.Remove(columnName);
+
+                // Give the new column the old column's name
+                dc.ColumnName = columnName;
             }
         }
 
-        public IHttpActionResult GenerateResponseMessage(ApiController controller)
+        public IActionResult GenerateResponseMessage()
         {
-            return new ODataReturnNegotiatedContentResult(this, controller);
+            return new ODataReturnNegotiatedContentResult(this);
         }
 
-        public IHttpActionResult GenerateCountResponseMessage(ApiController controller)
+        public IActionResult GenerateCountResponseMessage()
         {
-            return new ODataNegotiatedContentResult<Int32>(this.Count ?? 0, controller);
+            return new ODataNegotiatedContentResult<Int32>(this.Count ?? 0);
         }
     }
 }
